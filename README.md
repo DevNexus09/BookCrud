@@ -89,12 +89,22 @@ Set `DATABASE_URL` to use MySQL/Postgres (e.g. `postgresql+psycopg2://user:pass@
 
 ## Tests
 
+From the project root:
+
 ```bash
-cd src
-pytest test.py
+pytest
 ```
 
-Tests use an in-memory database and never touch `database.db`.
+- `tests/conftest.py`: shared fixtures. Each test gets a fresh in-memory SQLite DB, so tests never touch `database.db` or affect each other.
+- `tests/test_books_api.py`: endpoint tests covering list/pagination, create, get, update, delete, 404s and validation errors (422).
+- `tests/test_schema.py`: unit tests for the Pydantic schemas.
+
+Run one file or one test:
+
+```bash
+pytest tests/test_schema.py
+pytest -k delete
+```
 
 ## Data Schema
 
